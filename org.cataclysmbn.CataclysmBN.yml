@@ -27,10 +27,10 @@ modules:
     sources:
       - type: git
         url: https://github.com/cataclysmbnteam/Cataclysm-BN.git
-        commit: "205ff7e00265f63aa6b3ce241b039814fc696930"
+        commit: "85af70f1f663b998a987e59ee467b1011dc44568"
       - type: file
-        url: https://raw.githubusercontent.com/cataclysmbnteam/Cataclysm-BN/f1cec4ea91fc22181635d82fa43e3e4410968252/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
-        sha256: 6198dfd666fe2adfd79f40aecc9a7ea5bcc75beee2dfbd7eb85fe2d143a041bf
+        url: https://raw.githubusercontent.com/cataclysmbnteam/Cataclysm-BN/7e817115dcb44f327114f634a7fbb2f5ec8cf8fd/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
+        sha256: 89b94074ab1234dcc60a0c74551772a45179fa6d234ad4c8993eba3570eb7e37
       - type: file
         url: https://raw.githubusercontent.com/cataclysmbnteam/Cataclysm-BN/cb3a3769dc76a3cfd730c190a068f329fc8de2e9/data/XDG/org.cataclysmbn.CataclysmBN.desktop
         sha256: ff39b55f5b3d11825a9d725da247f90399651f4f0ba9a11c3bdf3e630dd2c150
