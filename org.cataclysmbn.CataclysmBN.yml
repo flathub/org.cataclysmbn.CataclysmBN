@@ -15,7 +15,7 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        MAKE_ARGS: "PREFIX=/app LANGUAGES=all USE_XDG_DIR=1 TILES=1 SOUND=1 LUA=1 RELEASE=1 RUNTESTS=0 ASTYLE=0 LINTJSON=0"
+        MAKE_ARGS: "PREFIX=/app LANGUAGES=all USE_XDG_DIR=1 TILES=1 SOUND=1 RELEASE=1 RUNTESTS=0 ASTYLE=0 LINTJSON=0"
     build-commands:
       - sed -i "/#WARNINGS = -w/c WARNINGS = -w" Makefile
       - make -j $FLATPAK_BUILDER_N_JOBS $MAKE_ARGS
@@ -27,10 +27,10 @@ modules:
     sources:
       - type: git
         url: https://github.com/cataclysmbnteam/Cataclysm-BN.git
-        commit: "85af70f1f663b998a987e59ee467b1011dc44568"
+        commit: "e1713b73fc5f7ea9b0d79f5f8f8128fd0da28de8"
       - type: file
-        url: https://raw.githubusercontent.com/cataclysmbnteam/Cataclysm-BN/7e817115dcb44f327114f634a7fbb2f5ec8cf8fd/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
-        sha256: 89b94074ab1234dcc60a0c74551772a45179fa6d234ad4c8993eba3570eb7e37
+        url: https://raw.githubusercontent.com/cataclysmbnteam/Cataclysm-BN/929dc46346a5c1fcb90c94b3bb2f2aa4e233b458/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
+        sha256: 6c9368278caef904dbcce38bb9041b46d249fc0902ab8779957576953c8cdf04
       - type: file
         url: https://raw.githubusercontent.com/cataclysmbnteam/Cataclysm-BN/cb3a3769dc76a3cfd730c190a068f329fc8de2e9/data/XDG/org.cataclysmbn.CataclysmBN.desktop
         sha256: ff39b55f5b3d11825a9d725da247f90399651f4f0ba9a11c3bdf3e630dd2c150
