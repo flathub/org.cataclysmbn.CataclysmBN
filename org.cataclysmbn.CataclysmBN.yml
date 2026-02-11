@@ -12,18 +12,24 @@ finish-args:
 
 modules:
   - name: cataclysm-bn-tiles
-    buildsystem: simple
-    build-options:
-      env:
-        MAKE_ARGS: "PREFIX=/app LANGUAGES=all USE_XDG_DIR=1 TILES=1 SOUND=1 RELEASE=1 RUNTESTS=0 ASTYLE=0 LINTJSON=0"
-    build-commands:
-      - sed -i "/#WARNINGS = -w/c WARNINGS = -w" Makefile
-      - make -j $FLATPAK_BUILDER_N_JOBS $MAKE_ARGS
-      - make $MAKE_ARGS localization
-      - make $MAKE_ARGS install
-      - install -Dm644 org.cataclysmbn.CataclysmBN.svg /app/share/icons/hicolor/scalable/apps/org.cataclysmbn.CataclysmBN.svg
-      - install -Dm755 org.cataclysmbn.CataclysmBN.desktop /app/share/applications/org.cataclysmbn.CataclysmBN.desktop
-      - install -Dm644 org.cataclysmbn.CataclysmBN.metainfo.xml /app/share/metainfo/org.cataclysmbn.CataclysmBN.metainfo.xml
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+        - -DCMAKE_BUILD_TYPE=Release
+        - -DCURSES=OFF
+        - -DTILES=ON
+        - -DSOUND=ON
+        - -DLANGUAGES=all
+        - -DUSE_XDG_DIR=ON
+        - --install-prefix=/app
+        - -DTESTS=OFF
+        - -DJSON_FORMAT=OFF
+    post-install:
+      - install -Dm644 ../org.cataclysmbn.CataclysmBN.svg /app/share/icons/hicolor/scalable/apps/org.cataclysmbn.CataclysmBN.svg
+      - install -Dm755 ../org.cataclysmbn.CataclysmBN.desktop /app/share/applications/org.cataclysmbn.CataclysmBN.desktop
+      - install -Dm644 ../org.cataclysmbn.CataclysmBN.metainfo.xml /app/share/metainfo/org.cataclysmbn.CataclysmBN.metainfo.xml
+      - cp -R ../data/lua /app/share/cataclysm-bn/
+      - rm -r /app/share/cataclysm-bn/data/
     sources:
       - type: git
         url: https://github.com/cataclysmbnteam/Cataclysm-BN.git
