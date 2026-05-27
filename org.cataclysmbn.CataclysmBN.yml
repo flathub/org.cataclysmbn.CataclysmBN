@@ -1,6 +1,6 @@
-id: "org.cataclysmbn.CataclysmBN"
-runtime: "org.freedesktop.Platform"
-runtime-version: '24.08'
+id: org.cataclysmbn.CataclysmBN
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 command: cataclysm-bn-tiles
 finish-args:
@@ -9,8 +9,9 @@ finish-args:
   - --socket=fallback-x11
   - --share=ipc
   - --device=dri
-
 modules:
+  - shared-modules/SDL2/SDL2_image.json
+  - shared-modules/SDL2/SDL2_ttf.json
   - name: cataclysm-bn-tiles
     buildsystem: cmake-ninja
     builddir: true
@@ -25,15 +26,15 @@ modules:
         - -DTESTS=OFF
         - -DJSON_FORMAT=OFF
     post-install:
-      - install -Dm644 ../org.cataclysmbn.CataclysmBN.svg /app/share/icons/hicolor/scalable/apps/org.cataclysmbn.CataclysmBN.svg
-      - install -Dm755 ../org.cataclysmbn.CataclysmBN.desktop /app/share/applications/org.cataclysmbn.CataclysmBN.desktop
-      - install -Dm644 ../org.cataclysmbn.CataclysmBN.metainfo.xml /app/share/metainfo/org.cataclysmbn.CataclysmBN.metainfo.xml
+      - install -Dm644 ../${FLATPAK_ID}.svg -t /app/share/icons/hicolor/scalable/apps/
+      - install -Dm755 ../${FLATPAK_ID}.desktop -t /app/share/applications/
+      - install -Dm644 ../${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo/
       - cp -R ../data/lua /app/share/cataclysm-bn/
       - rm -r /app/share/cataclysm-bn/data/
     sources:
       - type: git
         url: https://github.com/cataclysmbnteam/Cataclysm-BN.git
-        commit: "f85617db1099110eb01507826ec75abcd05ac09d"
+        commit: f85617db1099110eb01507826ec75abcd05ac09d
       - type: file
         url: https://raw.githubusercontent.com/cataclysmbn/Cataclysm-BN/6481fe353db109239e857d5cc949619dde8ec679/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
         sha256: 4d8a675a4253798383a09c7b3d1111aecb98f8581e6e2f4b2fe1c422ad62ff99
