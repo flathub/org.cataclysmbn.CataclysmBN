@@ -26,8 +26,8 @@ modules:
         - -DJSON_FORMAT=OFF
     post-install:
       - install -Dm644 ../${FLATPAK_ID}.svg -t /app/share/icons/hicolor/scalable/apps/
-      - install -Dm755 ../${FLATPAK_ID}.desktop /app/share/applications/
-      - install -Dm644 ../${FLATPAK_ID}.metainfo.xml /app/share/metainfo/
+      - install -Dm755 ../${FLATPAK_ID}.desktop -t /app/share/applications/
+      - install -Dm644 ../${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo/
     sources:
       - type: git
         url: https://github.com/cataclysmbnteam/Cataclysm-BN.git
