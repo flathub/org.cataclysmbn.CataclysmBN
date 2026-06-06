@@ -1,6 +1,6 @@
-id: "org.cataclysmbn.CataclysmBN"
-runtime: "org.freedesktop.Platform"
-runtime-version: '24.08'
+id: org.cataclysmbn.CataclysmBN
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 command: cataclysm-bn-tiles
 finish-args:
@@ -9,7 +9,6 @@ finish-args:
   - --socket=fallback-x11
   - --share=ipc
   - --device=dri
-
 modules:
   - name: cataclysm-bn-tiles
     buildsystem: cmake-ninja
@@ -18,25 +17,24 @@ modules:
         - -DCMAKE_BUILD_TYPE=Release
         - -DCURSES=OFF
         - -DTILES=ON
-        - -DSOUND=ON
+        # 25.08 does not have SDL3_mixer and we can't build it at compile time, so just disable it for now since soundpacks are pretty minor anyway.
+        - -DSOUND=OFF
         - -DLANGUAGES=all
         - -DUSE_XDG_DIR=ON
         - --install-prefix=/app
         - -DTESTS=OFF
         - -DJSON_FORMAT=OFF
     post-install:
-      - install -Dm644 ../org.cataclysmbn.CataclysmBN.svg /app/share/icons/hicolor/scalable/apps/org.cataclysmbn.CataclysmBN.svg
-      - install -Dm755 ../org.cataclysmbn.CataclysmBN.desktop /app/share/applications/org.cataclysmbn.CataclysmBN.desktop
-      - install -Dm644 ../org.cataclysmbn.CataclysmBN.metainfo.xml /app/share/metainfo/org.cataclysmbn.CataclysmBN.metainfo.xml
-      - cp -R ../data/lua /app/share/cataclysm-bn/
-      - rm -r /app/share/cataclysm-bn/data/
+      - install -Dm644 ../${FLATPAK_ID}.svg -t /app/share/icons/hicolor/scalable/apps/
+      - install -Dm755 ../${FLATPAK_ID}.desktop -t /app/share/applications/
+      - install -Dm644 ../${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo/
     sources:
       - type: git
         url: https://github.com/cataclysmbnteam/Cataclysm-BN.git
-        commit: "f85617db1099110eb01507826ec75abcd05ac09d"
+        commit: dcbb2708be1bb63dd4a11ccd00d2fc3f835e5c55
       - type: file
-        url: https://raw.githubusercontent.com/cataclysmbn/Cataclysm-BN/6481fe353db109239e857d5cc949619dde8ec679/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
-        sha256: 4d8a675a4253798383a09c7b3d1111aecb98f8581e6e2f4b2fe1c422ad62ff99
+        url: https://raw.githubusercontent.com/cataclysmbn/Cataclysm-BN/f4fbf0fa9526f7898d6ca16a43d5d4b281fb5b00/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
+        sha256: d6037a050c4f47a254e88d67e7daad5c4531de9f9907769f596af904bbe54c3c
       - type: file
         url: https://raw.githubusercontent.com/cataclysmbnteam/Cataclysm-BN/cb3a3769dc76a3cfd730c190a068f329fc8de2e9/data/XDG/org.cataclysmbn.CataclysmBN.desktop
         sha256: ff39b55f5b3d11825a9d725da247f90399651f4f0ba9a11c3bdf3e630dd2c150
