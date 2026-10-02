@@ -1,7 +1,9 @@
 id: org.cataclysmbn.CataclysmBN
 runtime: org.freedesktop.Platform
-runtime-version: '25.08'
+runtime-version: '26.08'
 sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.llvm22
 command: cataclysm-bn-tiles
 finish-args:
   - --socket=pulseaudio
@@ -10,20 +12,36 @@ finish-args:
   - --share=ipc
   - --device=dri
 modules:
+  - name: SDL_shadercross
+    buildsystem: cmake
+    builddir: true
+    config-opts:
+        - -DSDLSHADERCROSS_VENDORED=ON
+    sources:
+      - type: git
+        url: https://github.com/libsdl-org/SDL_shadercross.git
+        commit: 1ff05bec573988a98ef9e0260b4da44f512b8367
   - name: cataclysm-bn-tiles
     buildsystem: cmake-ninja
     builddir: true
+    build-options:
+      prepend-path: /usr/lib/sdk/llvm22/bin
     config-opts:
+        - -DCMAKE_C_COMPILER=clang
+        - -DCMAKE_CXX_COMPILER=clang++
+        # The pinned release mixes an optimized PCH with unoptimized Lua bindings.
+        - -DCMAKE_DISABLE_PRECOMPILE_HEADERS=ON
         - -DCMAKE_BUILD_TYPE=Release
         - -DCURSES=OFF
         - -DTILES=ON
-        # 25.08 does not have SDL3_mixer and we can't build it at compile time, so just disable it for now since soundpacks are pretty minor anyway.
-        - -DSOUND=OFF
+        - -DSOUND=ON
         - -DLANGUAGES=all
         - -DUSE_XDG_DIR=ON
         - --install-prefix=/app
         - -DTESTS=OFF
         - -DJSON_FORMAT=OFF
+        # We build shadercross before the game already, and if that doesn't work then better to fail slightly faster.
+        - -DBUILD_SHADERCROSS=OFF
     post-install:
       - install -Dm644 ../${FLATPAK_ID}.svg -t /app/share/icons/hicolor/scalable/apps/
       - install -Dm755 ../${FLATPAK_ID}.desktop -t /app/share/applications/
@@ -31,10 +49,10 @@ modules:
     sources:
       - type: git
         url: https://github.com/cataclysmbnteam/Cataclysm-BN.git
-        commit: dcbb2708be1bb63dd4a11ccd00d2fc3f835e5c55
+        commit: e7b497637d452928ef1a9a77f175c5fd9c3fa75e
       - type: file
-        url: https://raw.githubusercontent.com/cataclysmbn/Cataclysm-BN/f4fbf0fa9526f7898d6ca16a43d5d4b281fb5b00/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
-        sha256: d6037a050c4f47a254e88d67e7daad5c4531de9f9907769f596af904bbe54c3c
+        url: https://raw.githubusercontent.com/cataclysmbn/Cataclysm-BN/cc9c172dda68abf607087f39b2c0a9234ad1cc40/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
+        sha256: 6fbaef343870231d7df3512c60c0542036b9de66c0f2f7509c726ddd394c9666
       - type: file
         url: https://raw.githubusercontent.com/cataclysmbnteam/Cataclysm-BN/cb3a3769dc76a3cfd730c190a068f329fc8de2e9/data/XDG/org.cataclysmbn.CataclysmBN.desktop
         sha256: ff39b55f5b3d11825a9d725da247f90399651f4f0ba9a11c3bdf3e630dd2c150
