@@ -2,6 +2,8 @@ id: org.cataclysmbn.CataclysmBN
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.llvm22
 command: cataclysm-bn-tiles
 finish-args:
   - --socket=pulseaudio
@@ -13,7 +15,13 @@ modules:
   - name: cataclysm-bn-tiles
     buildsystem: cmake-ninja
     builddir: true
+    build-options:
+      prepend-path: /usr/lib/sdk/llvm22/bin
     config-opts:
+        - -DCMAKE_C_COMPILER=clang
+        - -DCMAKE_CXX_COMPILER=clang++
+        # The pinned release mixes an optimized PCH with unoptimized Lua bindings.
+        - -DCMAKE_DISABLE_PRECOMPILE_HEADERS=ON
         - -DCMAKE_BUILD_TYPE=Release
         - -DCURSES=OFF
         - -DTILES=ON
