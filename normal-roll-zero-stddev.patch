@@ -1,0 +1,15 @@
+diff --git a/src/rng.cpp b/src/rng.cpp
+index 76e77190f16..215d5f50906 100644
+--- a/src/rng.cpp
++++ b/src/rng.cpp
+@@ -41,6 +41,10 @@ units::angle random_direction()
+ 
+ double normal_roll( double mean, double stddev )
+ {
++    // std::normal_distribution requires stddev > 0
++    if( stddev <= 0.0 ) {
++        return mean;
++    }
+     static std::normal_distribution<double> rng_normal_dist;
+     return rng_normal_dist( rng_get_engine(), std::normal_distribution<>::param_type( mean, stddev ) );
+ }

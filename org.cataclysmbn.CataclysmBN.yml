@@ -50,6 +50,9 @@ modules:
       - type: git
         url: https://github.com/cataclysmbnteam/Cataclysm-BN.git
         commit: e7b497637d452928ef1a9a77f175c5fd9c3fa75e
+      # https://github.com/cataclysmbn/Cataclysm-BN/issues/10582
+      - type: patch
+        path: normal-roll-zero-stddev.patch
       - type: file
         url: https://raw.githubusercontent.com/cataclysmbn/Cataclysm-BN/cc9c172dda68abf607087f39b2c0a9234ad1cc40/data/XDG/org.cataclysmbn.CataclysmBN.metainfo.xml
         sha256: 6fbaef343870231d7df3512c60c0542036b9de66c0f2f7509c726ddd394c9666
